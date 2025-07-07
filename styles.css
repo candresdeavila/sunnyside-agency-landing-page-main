@@ -5,3 +5,9 @@ body {
 h1, h2 {
   font-family: "Fraunces", serif;
 }
+
+@media (max-width: 767px) {
+    #hero {
+      background-image: url('./images/desktop/image-header.jpg') !important;
+    }
+  }
