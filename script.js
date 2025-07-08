@@ -14,13 +14,18 @@ function renderHero() {
           <li><a href="#" class="hover:underline">Services</a></li>
           <li><a href="#" class="hover:underline">Projects</a></li>
           <li>
-            <a href="#" class="bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-opacity-75 transition">Contact</a>
+            <a href="#" class="bg-white text-black px-6 py-4 rounded-full font-semibold uppercase text-sm hover:bg-[#6fcfff] hover:text-white hover:opacity-90 transition-all duration-300">Contact</a>
           </li>
         </ul>
-        <button class="block md:hidden z-30">
+
+        <!-- Botón hamburguesa solo en mobile -->
+        <button id="menuToggle" class="block md:hidden z-30">
           <img src="./images/icon-hamburger.svg" alt="Menu" class="w-6 h-6">
         </button>
       </nav>
+
+      <!-- CONTENEDOR para inyectar el menú móvil -->
+      <div id="menuContainer" class="absolute top-[80px] left-0 w-full z-20 px-6 md:hidden"></div>
 
       <!-- TEXTO HERO -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center z-10 flex flex-col items-center gap-6">
@@ -33,6 +38,7 @@ function renderHero() {
     </section>
   `;
 }
+
 renderHero();
 
 function renderTransformSection() {
@@ -291,3 +297,44 @@ function renderFooter() {
   body.innerHTML += footer;
 }
 renderFooter();
+
+
+
+function setupMobileMenu() {
+  const menuToggle = document.getElementById("menuToggle");
+  const menuContainer = document.getElementById("menuContainer");
+  let isMenuOpen = false;
+
+  function renderMobileMenu() {
+    const menu = document.createElement("div");
+    menu.id = "mobileMenu";
+    menu.className =
+      "bg-white text-center py-6 rounded-md shadow-md flex flex-col items-center gap-6 animate-fade-in";
+
+    menu.innerHTML = `
+      <ul class="text-gray-700 text-lg font-semibold space-y-6">
+        <li><a href="#" class="hover:text-[#2b85b2] transition">About</a></li>
+        <li><a href="#" class="hover:text-[#2b85b2] transition">Services</a></li>
+        <li><a href="#" class="hover:text-[#2b85b2] transition">Projects</a></li>
+      </ul>
+      <button class="bg-yellow-400 text-black font-bold py-2 px-6 rounded-full uppercase text-sm hover:text-white hover:opacity-80 transition duration-300">Contact</button>
+    `;
+
+    menuContainer.appendChild(menu);
+  }
+
+  function removeMobileMenu() {
+    const existingMenu = document.getElementById("mobileMenu");
+    if (existingMenu) existingMenu.remove();
+  }
+
+  menuToggle.addEventListener("click", () => {
+    if (!isMenuOpen) {
+      renderMobileMenu();
+    } else {
+      removeMobileMenu();
+    }
+    isMenuOpen = !isMenuOpen;
+  });
+}
+setupMobileMenu();
